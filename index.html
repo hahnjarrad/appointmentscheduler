@@ -1,0 +1,92 @@
+<index.html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f7f7f7;
+            border-radius: 10px;
+        }
+        h1 { text-align: center; }
+        .hidden { display: none; }
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #0078ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+        .success-box {
+            padding: 15px;
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            margin-top: 20px;
+            border-radius: 6px;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Request an Appointment</h1>
+
+<p>Please choose a time and submit your request.  
+Your appointment is **not confirmed** until approved.</p>
+
+<div id="request-section">
+
+    <form id="requestForm" action="https://formsubmit.co/hahn_jarrad@yahoo.com" method="POST">
+        <input type="hidden" name="_subject" value="New Appointment Request">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Select Appointment Time:</label>
+        <input type="datetime-local" name="appointment_time" required>
+
+        <label>Notes (optional):</label>
+        <textarea name="notes" rows="3"></textarea>
+
+        <br><br>
+        <button type="submit">Submit Request</button>
+    </form>
+</div>
+
+<div id="submitted-section" class="hidden">
+    <div class="success-box">
+        <h3>Request Submitted</h3>
+        <p>Your appointment request has been sent and is awaiting approval.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById("requestForm").addEventListener("submit", function() {
+        localStorage.setItem("requestSubmitted", "true");
+    });
+
+    if (localStorage.getItem("requestSubmitted") === "true") {
+        document.getElementById("request-section").classList.add("hidden");
+        document.getElementById("submitted-section").classList.remove("hidden");
+    }
+</script>
+
+</body>
+</html>
